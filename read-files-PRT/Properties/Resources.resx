@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="fileName" xml:space="preserve">
-    <value>DataPRT.csv</value>
+    <value>DataPRT-PB.txt</value>
   </data>
   <data name="rutaArchivoReadPB" xml:space="preserve">
     <value>Z:\Desarrollo\Nadia Disla\ALPHA_PB_C02_DAT.txt</value>

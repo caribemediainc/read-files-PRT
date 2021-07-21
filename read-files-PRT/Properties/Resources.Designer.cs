@@ -61,7 +61,7 @@ namespace read_files_PRT.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to DataPRT.csv.
+        ///   Looks up a localized string similar to DataPRT-PB.txt.
         /// </summary>
         internal static string fileName {
             get {
