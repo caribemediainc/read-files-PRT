@@ -61,7 +61,7 @@ namespace read_files_PRT.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to DataPRT-PB.txt.
+        ///   Looks up a localized string similar to DataPRT-GB.txt.
         /// </summary>
         internal static string fileName {
             get {
@@ -70,7 +70,7 @@ namespace read_files_PRT.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Z:\Desarrollo\Nadia Disla\ALPHA_PB_C02_DAT.txt.
+        ///   Looks up a localized string similar to Z:\Desarrollo\Nadia Disla\ALPHA_GB_C02_DAT.txt.
         /// </summary>
         internal static string rutaArchivoReadPB {
             get {
