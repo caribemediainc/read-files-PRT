@@ -61,7 +61,7 @@ namespace read_files_PRT.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to DataPRT-GB.txt.
+        ///   Looks up a localized string similar to DataPRT-PB.txt.
         /// </summary>
         internal static string fileName {
             get {
@@ -70,7 +70,7 @@ namespace read_files_PRT.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Z:\Desarrollo\Nadia Disla\ALPHA_GB_C02_DAT.txt.
+        ///   Looks up a localized string similar to Z:\Desarrollo\Nadia Disla\ALPHA_PB_C02_DAT.txt.
         /// </summary>
         internal static string rutaArchivoReadPB {
             get {
@@ -84,24 +84,6 @@ namespace read_files_PRT.Properties {
         internal static string rutaArchivoWritePB {
             get {
                 return ResourceManager.GetString("rutaArchivoWritePB", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to C:\Users\Nadia Disla\Documents\CM-Projects\archivito.txt.
-        /// </summary>
-        internal static string rutaTest {
-            get {
-                return ResourceManager.GetString("rutaTest", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to C:\Users\Nadia Disla\Documents\CM-Projects\.
-        /// </summary>
-        internal static string rutaTestWrite {
-            get {
-                return ResourceManager.GetString("rutaTestWrite", resourceCulture);
             }
         }
     }
