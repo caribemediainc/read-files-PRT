@@ -117,13 +117,22 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="fileName" xml:space="preserve">
-    <value>DataPRT-PB.txt</value>
+  <data name="rutaArchivoReadBC" xml:space="preserve">
+    <value>\\netappnas.csid.local\Informatica\Desarrollo\Nadia Disla\Documentos PRT\ALPHA_BC_C02_DAT.txt</value>
+  </data>
+  <data name="rutaArchivoReadGB" xml:space="preserve">
+    <value>\\netappnas.csid.local\Informatica\Desarrollo\Nadia Disla\Documentos PRT\ALPHA_GB_C02_DAT.txt</value>
   </data>
   <data name="rutaArchivoReadPB" xml:space="preserve">
-    <value>Z:\Desarrollo\Nadia Disla\ALPHA_PB_C02_DAT.txt</value>
+    <value>\\netappnas.csid.local\Informatica\Desarrollo\Nadia Disla\Documentos PRT\ALPHA_PB_C02_DAT.txt</value>
+  </data>
+  <data name="rutaArchivoWriteBC" xml:space="preserve">
+    <value>\\netappnas.csid.local\Informatica\Desarrollo\Nadia Disla\Documentos PRT\DataPRT-BC.txt</value>
+  </data>
+  <data name="rutaArchivoWriteGB" xml:space="preserve">
+    <value>\\netappnas.csid.local\Informatica\Desarrollo\Nadia Disla\Documentos PRT\DataPRT-GB.txt</value>
   </data>
   <data name="rutaArchivoWritePB" xml:space="preserve">
-    <value>Z:\Desarrollo\Nadia Disla\</value>
+    <value>\\netappnas.csid.local\Informatica\Desarrollo\Nadia Disla\Documentos PRT\DataPRT-PB.txt</value>
   </data>
 </root>

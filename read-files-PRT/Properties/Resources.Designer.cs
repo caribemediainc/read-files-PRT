@@ -61,16 +61,25 @@ namespace read_files_PRT.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to DataPRT-PB.txt.
+        ///   Looks up a localized string similar to \\netappnas.csid.local\Informatica\Desarrollo\Nadia Disla\Documentos PRT\ALPHA_BC_C02_DAT.txt.
         /// </summary>
-        internal static string fileName {
+        internal static string rutaArchivoReadBC {
             get {
-                return ResourceManager.GetString("fileName", resourceCulture);
+                return ResourceManager.GetString("rutaArchivoReadBC", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Z:\Desarrollo\Nadia Disla\ALPHA_PB_C02_DAT.txt.
+        ///   Looks up a localized string similar to \\netappnas.csid.local\Informatica\Desarrollo\Nadia Disla\Documentos PRT\ALPHA_GB_C02_DAT.txt.
+        /// </summary>
+        internal static string rutaArchivoReadGB {
+            get {
+                return ResourceManager.GetString("rutaArchivoReadGB", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to \\netappnas.csid.local\Informatica\Desarrollo\Nadia Disla\Documentos PRT\ALPHA_PB_C02_DAT.txt.
         /// </summary>
         internal static string rutaArchivoReadPB {
             get {
@@ -79,7 +88,25 @@ namespace read_files_PRT.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Z:\Desarrollo\Nadia Disla\.
+        ///   Looks up a localized string similar to \\netappnas.csid.local\Informatica\Desarrollo\Nadia Disla\Documentos PRT\DataPRT-BC.txt.
+        /// </summary>
+        internal static string rutaArchivoWriteBC {
+            get {
+                return ResourceManager.GetString("rutaArchivoWriteBC", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to \\netappnas.csid.local\Informatica\Desarrollo\Nadia Disla\Documentos PRT\DataPRT-GB.txt.
+        /// </summary>
+        internal static string rutaArchivoWriteGB {
+            get {
+                return ResourceManager.GetString("rutaArchivoWriteGB", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to \\netappnas.csid.local\Informatica\Desarrollo\Nadia Disla\Documentos PRT\DataPRT-PB.txt.
         /// </summary>
         internal static string rutaArchivoWritePB {
             get {
