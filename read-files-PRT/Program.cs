@@ -12,17 +12,18 @@ namespace read_files_PRT
         public static StreamReader streamReader;
         public static StreamWriter streamWriter;
         public static string rutaArchivoReadPB = Properties.Resources.rutaArchivoReadPB,
-             rutaArchivoWritePB = Properties.Resources.rutaArchivoWritePB;
+             rutaArchivoWritePB = Properties.Resources.rutaArchivoWritePB, rutaArchivoReadGB = Properties.Resources.rutaArchivoReadGB,
+                rutaArchivoWriteGB = Properties.Resources.rutaArchivoWriteGB, rutaArchivoReadBC = Properties.Resources.rutaArchivoReadBC,
+                rutaArchivoWriteBC = Properties.Resources.rutaArchivoWriteBC;
         public static int menuControl = 1;
         static void Main(string[] args)
         {
             Console.BackgroundColor = ConsoleColor.White;
             Console.ForegroundColor = ConsoleColor.Black;
             Console.Clear();
-
             Menu();
-            
         }
+        #region Menu
         static void Menu()
         {
             int optionSel;
@@ -34,6 +35,7 @@ namespace read_files_PRT
                 Console.WriteLine(" 2. Blancas Comercial por Pueblo (PB)\n");
                 Console.WriteLine(" 3. Gobierno (GB)\n");
                 Console.Write("Ingrese el número de la opción deseada: ");
+
                 while (!int.TryParse(Console.ReadLine(), out optionSel))
                 {
                     Console.Write(" Sólo se permiten números. Intente nuevamente: ");
@@ -52,26 +54,63 @@ namespace read_files_PRT
                         break;
                 }
             } while (menuControl == 1);
-
         }
-        static void GeneratePB()
+        #endregion
+
+        #region Repetir menú
+        static void RepeatMenu()
         {
-            if (!File.Exists(rutaArchivoWritePB))
+            Console.Write(" ¿Desea obtener otro archivo? (S/N): ");
+            string answer = Console.ReadLine();
+            while (!Regex.IsMatch(answer, @"[a-zA-Z]"))
             {
-                streamReader = new StreamReader(rutaArchivoReadPB);
-                streamWriter = new StreamWriter(rutaArchivoWritePB);
+                Console.Write(" No se permiten números. Intente nuevamente: ");
+                answer = Console.ReadLine();
+            }
+            if (answer == "s" || answer == "S")
+            {
+                Console.Clear();
+                Menu();
+            }
+            else if (answer == "n" || answer == "N")
+            {
+                menuControl = 2;
+                Console.Clear();
             }
             else
             {
-                File.Delete(rutaArchivoWritePB);
-                streamReader = new StreamReader(rutaArchivoReadPB);
-                streamWriter = new StreamWriter(rutaArchivoWritePB);
+                Console.Write(" Sólo se permite Sí o No: S, N, s, n. Volviendo al menú principal...");
+                Console.Clear();
+                Menu();
             }
+        }
+        #endregion
+
+        #region Validar existencia de archivos
+        static void ValidateFile(string routeWrite, string routeRead)
+        {
+            if (!File.Exists(routeWrite))
+            {
+                streamReader = new StreamReader(routeRead);
+                streamWriter = new StreamWriter(routeWrite);
+            }
+            else
+            {
+                File.Delete(routeWrite);
+                streamReader = new StreamReader(routeRead);
+                streamWriter = new StreamWriter(routeWrite);
+            }
+        }
+        #endregion
+
+        #region Generar archivo Blancas Comercial por Pueblo (PB)
+        static void GeneratePB()
+        {
+            ValidateFile(rutaArchivoWritePB, rutaArchivoReadPB);
 
             while (!streamReader.EndOfStream)
             {
                 Console.WriteLine("Escribiendo archivo...");
-
                 string line = streamReader.ReadLine(), commercialName = "", undefined = "", undefinedCode = "", undefinedCode2 = "", phoneOriginal = "", phone = "", pueblo = "", originalAddress = "", finalAddress = "", newAddress = "",
                     undefined2 = "", splitColumnText;
                 int totalChar = 33;
@@ -131,7 +170,6 @@ namespace read_files_PRT
                     {
 
                     }
-                    
                 }
                 pueblo = pueblo.Replace(';', 'Ñ');
                 commercialName = commercialName.Replace(';', 'ñ');
@@ -146,54 +184,18 @@ namespace read_files_PRT
             Console.WriteLine("Se ha exportado el archivo txt correctamente.");
             RepeatMenu();
         }
-        static void RepeatMenu()
-        {
-            Console.Write(" ¿Desea obtener otro archivo? (S/N): ");
-            string answer = Console.ReadLine();
-            while (!Regex.IsMatch(answer, @"[a-zA-Z]"))
-            {
-                Console.Write(" No se permiten números. Intente nuevamente: ");
-                answer = Console.ReadLine();
-            }
-            if (answer == "s" || answer == "S")
-            {
-                Console.Clear();
-                Menu();
-            }
-            else if (answer == "n" || answer == "N")
-            {
-                menuControl = 2;
-                Console.Clear();
-            }
-            else
-            {
-                Console.Write(" Sólo se permite Sí o No: S, N, s, n. Volviendo al menú principal...");
-                Console.Clear();
-                Menu();
-            }
-        }
+        #endregion
+
+        #region Generar archivo Gobierno (GB)
         static void GenerateGB()
         {
-            string rutaArchivoReadGB = Properties.Resources.rutaArchivoReadGB,
-                rutaArchivoWriteGB = Properties.Resources.rutaArchivoWriteGB;
-
-            if (!File.Exists(rutaArchivoWriteGB))
-            {
-                streamReader = new StreamReader(rutaArchivoReadGB);
-                streamWriter = new StreamWriter(rutaArchivoWriteGB);
-            }
-            else
-            {
-                File.Delete(rutaArchivoWriteGB);
-                streamReader = new StreamReader(rutaArchivoReadGB);
-                streamWriter = new StreamWriter(rutaArchivoWriteGB);
-            }
+            ValidateFile(rutaArchivoWriteGB, rutaArchivoReadGB);
 
             while (!streamReader.EndOfStream)
             {
                 Console.WriteLine("Escribiendo archivo...");
                 string line = streamReader.ReadLine(), commercialName = "", undefined = "", undefinedCode = "", undefinedCode2 = "", phoneOriginal = "", phone = "", pueblo = "", originalAddress = "", finalAddress = "", newAddress = "",
-                                    undefined2 = "", undefined3 = "", splitColumnText, columnText, columnText2, columnText3, columnText4, columnText5, columnText6, columnText7, columnText8, columnText9, columnText10, columnText11, columnText12;
+                                    undefined2 = "", undefined3 = "", splitColumnText;
 
                 commercialName = line.Substring(0, 42);
                 undefined = line.Substring(42, 17);
@@ -208,24 +210,7 @@ namespace read_files_PRT
                     finalAddress = line.Substring(129);
                 }
                 else { finalAddress = ""; }
-                /* if (finalAddress.ToLower().Equals("ext"))
-                 {
-                     phone = "*" + phoneOriginal.Substring(6);
-                 }
-                 else if (finalAddress.ToLower().EndsWith(" ext") && (int.Parse(phoneOriginal.Substring(0, 1)) > 0 || phoneOriginal.Contains("000000")))
-                 {
-                     phone = "*" + phoneOriginal.Substring(6);
 
-                 }
-                 else if (finalAddress.ToLower().Contains("ext") && (int.Parse(phoneOriginal.Substring(0, 1)) > 0 || phoneOriginal.Contains("000000")))
-                 {
-                     phone = "*" + phoneOriginal.Substring(6);
-
-                 }
-                 else
-                 {
-                     phone = phoneOriginal.Insert(3, " ").Insert(7, "-");
-                 }*/
                 int totalChar = 33;
                 List<string> info = new List<string>();
                 List<string> info2 = new List<string>();
@@ -259,9 +244,9 @@ namespace read_files_PRT
                             info2.Add("|");
                         }
                     }
-                    catch (Exception ioe)
+                    catch (Exception ex)
                     {
-                        Console.WriteLine("Error: " + ioe.Message);
+                        Console.WriteLine("Error: " + ex.Message);
                         espacios = newAddress.Length;
                         if (espacios > 0)
                         {
@@ -275,10 +260,10 @@ namespace read_files_PRT
                         {
                             info2.Add("|");
                         }
-
-
                     }
                 }
+                if (phone == "000 000-0000") phone = "";
+                if (pueblo.Contains(';')) pueblo = pueblo.Replace(';', 'Ñ');
                 streamWriter.Write($"{commercialName}|{undefined}|{phone}|{undefined2}|{pueblo}|{undefinedCode}|{undefinedCode2}|");
                 foreach (string dir in info2)
                 {
@@ -287,32 +272,21 @@ namespace read_files_PRT
                 streamWriter.WriteLine();
             }
             streamWriter.Close();
-            Console.WriteLine("Se ha exportado el archivo CSV correctamente.");
-            Console.ReadKey();
+            Console.WriteLine("Se ha exportado el archivo txt correctamente.");
+            RepeatMenu();
         }
+        #endregion
 
+        #region Generar archivo Blancas Comercial (BC)
         static void GenerateBC()
         {
-            string rutaArchivoReadBC = Properties.Resources.rutaArchivoReadBC,
-                rutaArchivoWriteBC = Properties.Resources.rutaArchivoWriteBC;
-
-            if (!File.Exists(rutaArchivoWriteBC))
-            {
-                streamReader = new StreamReader(rutaArchivoReadBC);
-                streamWriter = new StreamWriter(rutaArchivoWriteBC);
-            }
-            else
-            {
-                File.Delete(rutaArchivoWriteBC);
-                streamReader = new StreamReader(rutaArchivoReadBC);
-                streamWriter = new StreamWriter(rutaArchivoWriteBC);
-            }
+            ValidateFile(rutaArchivoWriteBC, rutaArchivoReadBC);
 
             while (!streamReader.EndOfStream)
             {
                 Console.WriteLine("Escribiendo archivo...");
                 string line = streamReader.ReadLine(), commercialName = "", undefined = "", undefinedCode = "", undefinedCode2 = "", phoneOriginal = "", phone = "", pueblo = "", originalAddress = "", finalAddress = "", newAddress = "",
-                                    undefined2 = "", undefined3 = "", splitColumnText, columnText, columnText2, columnText3, columnText4, columnText5, columnText6, columnText7, columnText8, columnText9, columnText10, columnText11, columnText12;
+                                    undefined2 = "", undefined3 = "", splitColumnText;
 
                 commercialName = line.Substring(0, 42);
                 undefined = line.Substring(42, 17);
@@ -334,12 +308,10 @@ namespace read_files_PRT
                 else if (finalAddress.ToLower().EndsWith(" ext") && (int.Parse(phoneOriginal.Substring(0, 1)) > 0 || phoneOriginal.Contains("000000")))
                 {
                     phone = "*" + phoneOriginal.Substring(6);
-
                 }
                 else if (finalAddress.ToLower().Contains("ext") && (int.Parse(phoneOriginal.Substring(0, 1)) > 0 || phoneOriginal.Contains("000000")))
                 {
                     phone = "*" + phoneOriginal.Substring(6);
-
                 }
                 else
                 {
@@ -378,9 +350,9 @@ namespace read_files_PRT
                             info2.Add("|");
                         }
                     }
-                    catch (Exception ioe)
+                    catch (Exception ex)
                     {
-                        Console.WriteLine("Error: " + ioe.Message);
+                        Console.WriteLine("Error: " + ex.Message);
                         espacios = newAddress.Length;
                         if (espacios > 0)
                         {
@@ -394,8 +366,6 @@ namespace read_files_PRT
                         {
                             info2.Add("|");
                         }
-
-
                     }
                 }
                 streamWriter.Write($"{commercialName}|{undefined}|{phone}|{undefined2}|{pueblo}|{undefinedCode}|{undefinedCode2}|");
@@ -406,8 +376,10 @@ namespace read_files_PRT
                 streamWriter.WriteLine();
             }
             streamWriter.Close();
-            Console.WriteLine("Se ha exportado el archivo CSV correctamente.");
-            Console.ReadKey();
+            Console.WriteLine("Se ha exportado el archivo txt correctamente.");
+            RepeatMenu();
         }
+        #endregion
+
     }
 }

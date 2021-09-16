@@ -61,7 +61,7 @@ namespace read_files_PRT.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to \\netappnas.csid.local\Informatica\Desarrollo\Nadia Disla\Documentos PRT\ALPHA_BC_C02_DAT.txt.
+        ///   Looks up a localized string similar to Z:\Desarrollo\Nadia Disla\Documentos PRT\ALPHA_BC_C02_DAT.txt.
         /// </summary>
         internal static string rutaArchivoReadBC {
             get {
@@ -70,7 +70,7 @@ namespace read_files_PRT.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to \\netappnas.csid.local\Informatica\Desarrollo\Nadia Disla\Documentos PRT\ALPHA_GB_C02_DAT.txt.
+        ///   Looks up a localized string similar to Z:\Desarrollo\Nadia Disla\Documentos PRT\ALPHA_GB_C02_DAT.txt.
         /// </summary>
         internal static string rutaArchivoReadGB {
             get {
@@ -79,7 +79,7 @@ namespace read_files_PRT.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to \\netappnas.csid.local\Informatica\Desarrollo\Nadia Disla\Documentos PRT\ALPHA_PB_C02_DAT.txt.
+        ///   Looks up a localized string similar to Z:\Desarrollo\Nadia Disla\Documentos PRT\ALPHA_PB_C02_DAT.txt.
         /// </summary>
         internal static string rutaArchivoReadPB {
             get {
@@ -88,7 +88,7 @@ namespace read_files_PRT.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to \\netappnas.csid.local\Informatica\Desarrollo\Nadia Disla\Documentos PRT\DataPRT-BC.txt.
+        ///   Looks up a localized string similar to Z:\Desarrollo\Nadia Disla\Documentos PRT\DataPRT-BC.txt.
         /// </summary>
         internal static string rutaArchivoWriteBC {
             get {
@@ -97,7 +97,7 @@ namespace read_files_PRT.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to \\netappnas.csid.local\Informatica\Desarrollo\Nadia Disla\Documentos PRT\DataPRT-GB.txt.
+        ///   Looks up a localized string similar to Z:\Desarrollo\Nadia Disla\Documentos PRT\DataPRT-GB.txt.
         /// </summary>
         internal static string rutaArchivoWriteGB {
             get {
@@ -106,7 +106,7 @@ namespace read_files_PRT.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to \\netappnas.csid.local\Informatica\Desarrollo\Nadia Disla\Documentos PRT\DataPRT-PB.txt.
+        ///   Looks up a localized string similar to Z:\Desarrollo\Nadia Disla\Documentos PRT\DataPRT-PB.txt.
         /// </summary>
         internal static string rutaArchivoWritePB {
             get {
