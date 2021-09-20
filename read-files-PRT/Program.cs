@@ -1,4 +1,5 @@
-﻿using System;
+﻿using read_files_PRT.Data;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -21,7 +22,8 @@ namespace read_files_PRT
             Console.BackgroundColor = ConsoleColor.White;
             Console.ForegroundColor = ConsoleColor.Black;
             Console.Clear();
-            Menu();
+            ControlGeneral controlGeneral = new ControlGeneral();
+            controlGeneral.Menu();
         }
         #region Menu
         static void Menu()
