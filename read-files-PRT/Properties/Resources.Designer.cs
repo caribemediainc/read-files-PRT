@@ -61,6 +61,15 @@ namespace read_files_PRT.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to \\netappnas\Informatica\Desarrollo\Nadia Disla\Documentos PRT\PueblosRegionesPR.csv.
+        /// </summary>
+        internal static string rutaArchivoPueblosRegiones {
+            get {
+                return ResourceManager.GetString("rutaArchivoPueblosRegiones", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to \\netappnas\Informatica\Desarrollo\Nadia Disla\Documentos PRT\ALPHA_BC_C02_DAT.txt.
         /// </summary>
         internal static string rutaArchivoReadBC {

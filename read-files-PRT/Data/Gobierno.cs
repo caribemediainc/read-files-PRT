@@ -11,6 +11,7 @@ namespace read_files_PRT.Data
         {
             ControlGeneral generalControl = new ControlGeneral();
             generalControl.ValidateFileExistence(ControlGeneral.rutaArchivoWriteGB, ControlGeneral.rutaArchivoReadGB);
+            PueblosRegiones pueblosRegiones = new PueblosRegiones();
 
             while (!ControlGeneral.streamReader.EndOfStream)
             {
@@ -84,8 +85,11 @@ namespace read_files_PRT.Data
                     }
                 }
                 if (phone == "000 000-0000") phone = "";
-                if (pueblo.Contains(';')) pueblo = pueblo.Replace(';', 'Ñ');
-                ControlGeneral.streamWriter.Write($"{commercialName}|{undefined}|{phone}|{undefined2}|{pueblo}|{undefinedCode}|{undefinedCode2}|");
+                pueblo = pueblo.Replace(';', 'Ñ');
+                if (pueblo.EndsWith(' ')) pueblo = pueblo.TrimEnd();
+
+                pueblosRegiones.PuebloRegion(pueblo);
+                ControlGeneral.streamWriter.Write($"{commercialName}|{undefined}|{phone}|{undefined2}|{pueblo}|{PueblosRegiones.Pueblo}|{PueblosRegiones.Region}|{undefinedCode}|{undefinedCode2}|");
                 foreach (string dir in info2)
                 {
                     ControlGeneral.streamWriter.Write($"{dir}");

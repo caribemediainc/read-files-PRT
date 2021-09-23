@@ -7,11 +7,10 @@ namespace read_files_PRT.Data
     public class BlancasComercial
     {
         #region Generar archivo Blancas Comercial (BC)
-
         public void GenerateBC()
         {
             ControlGeneral generalControl = new ControlGeneral();
-
+            PueblosRegiones pueblosRegiones = new PueblosRegiones();
             generalControl.ValidateFileExistence(ControlGeneral.rutaArchivoWriteBC, ControlGeneral.rutaArchivoReadBC);
             
             while (!ControlGeneral.streamReader.EndOfStream)
@@ -100,6 +99,7 @@ namespace read_files_PRT.Data
                         }
                     }
                 }
+                pueblosRegiones.PuebloRegion(pueblo);
                 ControlGeneral.streamWriter.Write($"{commercialName}|{undefined}|{phone}|{undefined2}|{pueblo}|{undefinedCode}|{undefinedCode2}|");
                 foreach (string dir in info2)
                 {
