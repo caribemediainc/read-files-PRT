@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace read_files_PRT.Data
@@ -7,18 +8,20 @@ namespace read_files_PRT.Data
     public class Gobierno
     {
         #region Generar archivo Gobierno (GB)
+        string subCommercial, auxEmptyCommercial;
         public void GenerateGB()
         {
             ControlGeneral generalControl = new ControlGeneral();
             generalControl.ValidateFileExistence(ControlGeneral.rutaArchivoWriteGB, ControlGeneral.rutaArchivoReadGB);
             PueblosRegiones pueblosRegiones = new PueblosRegiones();
+            List<string> commercialNames = new List<string>();
 
             while (!ControlGeneral.streamReader.EndOfStream)
             {
                 Console.WriteLine("Escribiendo archivo...");
                 string line = ControlGeneral.streamReader.ReadLine(), commercialName = "", undefined = "", undefinedCode = "", undefinedCode2 = "", phoneOriginal = "", phone = "", pueblo = "", originalAddress = "", finalAddress = "", newAddress = "",
                                     identifier = "", undefined3 = "", cod_producto, splitColumnText, clasificado_formula;
-
+                
                 commercialName = line.Substring(0, 42);
                 undefined = line.Substring(42, 17);
                 phoneOriginal = line.Substring(59, 10);
@@ -105,7 +108,56 @@ namespace read_files_PRT.Data
                     cod_producto = "RG";
                 }
 
-                if(commercialName.Contains("GOB E"))
+                if(commercialName.Length > 7)
+                {
+                    subCommercial = commercialName.Substring(8, commercialName.Length - 8);
+                    commercialNames.Add(commercialName);
+                    foreach (string item in info2)
+                    {
+                        if (item.Length > subCommercial.Length)
+                        {
+                            commercialName = commercialName.Replace(subCommercial, item.Substring(0, item.Length - 1));
+                            commercialNames.Add(commercialName);
+                        }
+                    }
+                }
+                else if(commercialName.Length == 7)
+                {
+                    commercialNames.Add(commercialName);
+                }
+                //if (commercialName == "* GOB RECREACION Y DEPORTES DEPARTAMENTO")
+                //{
+                //    commercialName = "* GOB M RECREACION Y DEPORTES DEPARTAMENTO DE";
+                //    commercialNames.Add(commercialName);
+                //}
+                //else if(commercialName == "* GOB U S SOCIAL SECURITY ADMINIS")
+                //{
+                //    commercialName = "* GOB U S SOCIAL SECURITY ADMINISTRATION DEPARTMENT OF";
+                //    commercialNames.Add(commercialName);
+                //}
+                //else if(commercialName == "* GOB U S U S POSTAL SERVICE")
+                //{
+                //    commercialName = "* GOB U S POSTAL SERVICE";
+                //    commercialNames.Add(commercialName);
+                //}
+                //else if(commercialName == "* GOB E ACUEDUCTOS Y ALCANTARILLADOS")
+                //{
+                //    commercialName = "* GOB E ACUEDUCTOS Y ALCANTARILLADOS AUTORIDAD DE";
+                //    commercialNames.Add(commercialName);
+                //}
+                //else if (commercialName.Length > 7)
+                //{
+                //    subCommercial = commercialName.Substring(8, commercialName.Length - 8);
+                //    commercialNames.Add(commercialName);
+                //}
+                else
+                {
+                    commercialName = commercialNames.Last();
+                }
+
+                
+
+                if (commercialName.Contains("GOB E"))
                 {
                     clasificado_formula = "GOBIERNO DEL ELA";
                 }
@@ -121,7 +173,7 @@ namespace read_files_PRT.Data
                 {
                     clasificado_formula = "COURTS";
                 }
-               
+
                 ControlGeneral.streamWriter.Write($"{commercialName}|{clasificado_formula}|{undefined}|{phone}|{cod_producto}|{identifier}|{pueblo}|{PueblosRegiones.Pueblo}|{PueblosRegiones.Region}|{undefinedCode}|{undefinedCode2}|");
                 foreach (string dir in info2)
                 {
