@@ -10,6 +10,7 @@ namespace read_files_PRT.Data
         public void GeneratePB()
         {
             ControlGeneral generalControl = new ControlGeneral();
+            PueblosRegiones pueblosRegiones = new PueblosRegiones();
             generalControl.ValidateFileExistence(ControlGeneral.rutaArchivoWritePB, ControlGeneral.rutaArchivoReadPB);
 
             while (!ControlGeneral.streamReader.EndOfStream)
@@ -77,6 +78,7 @@ namespace read_files_PRT.Data
                 }
                 pueblo = pueblo.Replace(';', 'Ñ');
                 commercialName = commercialName.Replace(';', 'ñ');
+                pueblosRegiones.PuebloRegion(pueblo);
                 ControlGeneral.streamWriter.Write($"{commercialName}|{sbUndefined}|{phone}|{sbUndefined2}|{pueblo}|{undefinedCode}|{undefinedCode2}|");
                 foreach (string dir in info2)
                 {

@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="rutaArchivoPueblosRegiones" xml:space="preserve">
+    <value>\\netappnas\Informatica\Desarrollo\Nadia Disla\Documentos PRT\PueblosRegionesPR.csv</value>
+  </data>
   <data name="rutaArchivoReadBC" xml:space="preserve">
     <value>\\netappnas\Informatica\Desarrollo\Nadia Disla\Documentos PRT\ALPHA_BC_C02_DAT.txt</value>
   </data>

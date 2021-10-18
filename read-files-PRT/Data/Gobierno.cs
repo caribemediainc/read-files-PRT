@@ -17,13 +17,13 @@ namespace read_files_PRT.Data
             {
                 Console.WriteLine("Escribiendo archivo...");
                 string line = ControlGeneral.streamReader.ReadLine(), commercialName = "", undefined = "", undefinedCode = "", undefinedCode2 = "", phoneOriginal = "", phone = "", pueblo = "", originalAddress = "", finalAddress = "", newAddress = "",
-                                    undefined2 = "", undefined3 = "", splitColumnText;
+                                    identifier = "", undefined3 = "", cod_producto, splitColumnText, clasificado_formula;
 
                 commercialName = line.Substring(0, 42);
                 undefined = line.Substring(42, 17);
                 phoneOriginal = line.Substring(59, 10);
                 phone = phoneOriginal.Insert(3, " ").Insert(7, "-");
-                undefined2 = line.Substring(69, 1);
+                identifier = line.Substring(69, 1);
                 undefined3 = line.Substring(70, 57).TrimStart();
                 pueblo = undefined3.Substring(38, 3);
                 undefined3 = line.Substring(70, 41).Trim().Substring(2);
@@ -87,9 +87,42 @@ namespace read_files_PRT.Data
                 if (phone == "000 000-0000") phone = "";
                 pueblo = pueblo.Replace(';', 'Ñ');
                 if (pueblo.EndsWith(' ')) pueblo = pueblo.TrimEnd();
-
                 pueblosRegiones.PuebloRegion(pueblo);
-                ControlGeneral.streamWriter.Write($"{commercialName}|{undefined}|{phone}|{undefined2}|{pueblo}|{PueblosRegiones.Pueblo}|{PueblosRegiones.Region}|{undefinedCode}|{undefinedCode2}|");
+                if(identifier == "S")
+                {
+                    cod_producto = "TL";
+                }
+                else if(identifier == "R")
+                {
+                    cod_producto = "NM";
+                }
+                else if(commercialName == commercialName.ToUpper() && phone == "")
+                {
+                    cod_producto = "NAME";
+                }
+                else
+                {
+                    cod_producto = "RG";
+                }
+
+                if(commercialName.Contains("GOB E"))
+                {
+                    clasificado_formula = "GOBIERNO DEL ELA";
+                }
+                else if(commercialName.Contains("GOB M"))
+                {
+                    clasificado_formula = "GOBIERNO MUNICIPAL";
+                }
+                else if(commercialName.Contains("GOB U S"))
+                {
+                    clasificado_formula = "GOBIERNO FEDERAL (U S GOVERNMENT)";
+                }
+                else
+                {
+                    clasificado_formula = "COURTS";
+                }
+               
+                ControlGeneral.streamWriter.Write($"{commercialName}|{clasificado_formula}|{undefined}|{phone}|{cod_producto}|{identifier}|{pueblo}|{PueblosRegiones.Pueblo}|{PueblosRegiones.Region}|{undefinedCode}|{undefinedCode2}|");
                 foreach (string dir in info2)
                 {
                     ControlGeneral.streamWriter.Write($"{dir}");

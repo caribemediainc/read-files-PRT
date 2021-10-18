@@ -16,7 +16,7 @@ namespace read_files_PRT.Data
         public static string rutaArchivoReadPB = Properties.Resources.rutaArchivoReadPB,
              rutaArchivoWritePB = Properties.Resources.rutaArchivoWritePB, rutaArchivoReadGB = Properties.Resources.rutaArchivoReadGB,
                 rutaArchivoWriteGB = Properties.Resources.rutaArchivoWriteGB, rutaArchivoReadBC = Properties.Resources.rutaArchivoReadBC,
-                rutaArchivoWriteBC = Properties.Resources.rutaArchivoWriteBC;
+                rutaArchivoWriteBC = Properties.Resources.rutaArchivoWriteBC, rutaArchivoPueblosRegiones = Properties.Resources.rutaArchivoPueblosRegiones;
         public static int menuControl = 1;
 
         #endregion
