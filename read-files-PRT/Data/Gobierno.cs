@@ -8,7 +8,7 @@ namespace read_files_PRT.Data
     public class Gobierno
     {
         #region Generar archivo Gobierno (GB)
-        string subCommercial, auxEmptyCommercial;
+        string subCommercial, subInitial;
         public void GenerateGB()
         {
             ControlGeneral generalControl = new ControlGeneral();
@@ -108,64 +108,73 @@ namespace read_files_PRT.Data
                     cod_producto = "RG";
                 }
 
-                if(commercialName.Length > 7)
+                if (commercialName != "")
+                {
+                    subInitial = commercialName.Substring(0, 7);
+                }
+
+                if (commercialName.Length > 7)
                 {
                     subCommercial = commercialName.Substring(8, commercialName.Length - 8);
                     commercialNames.Add(commercialName);
                     foreach (string item in info2)
                     {
-                        if (item.Length > subCommercial.Length)
+                        var last = info2.LastOrDefault();
+                        if(last == "|")
                         {
-                            commercialName = commercialName.Replace(subCommercial, item.Substring(0, item.Length - 1));
-                            commercialNames.Add(commercialName);
+                            if (item.Length > subCommercial.Length)
+                            {
+                                if (item.Substring(0, 3) == "U S")
+                                {
+                                    item.Replace(item.Substring(0, 3), "");
+                                }
+                                commercialName = commercialName.Replace(subCommercial, item.Substring(0, item.Length - 1));
+                                commercialNames.Add(commercialName);
+                            }
                         }
+                    }
+                }
+                else if (commercialName.Length > 7 && subInitial == "* GOB R")
+                {
+                    commercialName = "* GOB M RECREACION Y DEPORTES DEPARTAMENTO DE";
+                    commercialNames.Add(commercialName);
+                }
+                else if(commercialName.Length == 28 && subInitial == "* GOB U")
+                {
+                    commercialName = "* GOB U S POSTAL SERVICE";
+                    commercialNames.Add(commercialName);
+                }
+                else if(subInitial == "* GOB U" && commercialName.Length > 9 && (commercialName.Substring(6, 7) == "U S U S" || commercialName.Substring(6, 6) == "US U S"))
+                {
+                    if (commercialName.Substring(6, 7) == "U S U S")
+                    {
+                        commercialName = commercialName.Replace(commercialName.Substring(6, 7), "U S");
+                        commercialNames.Add(commercialName);
+                    }
+                    else
+                    {
+                        commercialName = commercialName.Replace(commercialName.Substring(6, 6), "U S");
+                        commercialNames.Add(commercialName);
                     }
                 }
                 else if(commercialName.Length == 7)
                 {
                     commercialNames.Add(commercialName);
                 }
-                //if (commercialName == "* GOB RECREACION Y DEPORTES DEPARTAMENTO")
-                //{
-                //    commercialName = "* GOB M RECREACION Y DEPORTES DEPARTAMENTO DE";
-                //    commercialNames.Add(commercialName);
-                //}
-                //else if(commercialName == "* GOB U S SOCIAL SECURITY ADMINIS")
-                //{
-                //    commercialName = "* GOB U S SOCIAL SECURITY ADMINISTRATION DEPARTMENT OF";
-                //    commercialNames.Add(commercialName);
-                //}
-                //else if(commercialName == "* GOB U S U S POSTAL SERVICE")
-                //{
-                //    commercialName = "* GOB U S POSTAL SERVICE";
-                //    commercialNames.Add(commercialName);
-                //}
-                //else if(commercialName == "* GOB E ACUEDUCTOS Y ALCANTARILLADOS")
-                //{
-                //    commercialName = "* GOB E ACUEDUCTOS Y ALCANTARILLADOS AUTORIDAD DE";
-                //    commercialNames.Add(commercialName);
-                //}
-                //else if (commercialName.Length > 7)
-                //{
-                //    subCommercial = commercialName.Substring(8, commercialName.Length - 8);
-                //    commercialNames.Add(commercialName);
-                //}
                 else
                 {
                     commercialName = commercialNames.Last();
                 }
 
-                
-
-                if (commercialName.Contains("GOB E"))
+                if (subInitial == "* GOB E")
                 {
                     clasificado_formula = "GOBIERNO DEL ELA";
                 }
-                else if(commercialName.Contains("GOB M"))
+                else if(subInitial == "* GOB M" || subInitial =="* GOB R")
                 {
                     clasificado_formula = "GOBIERNO MUNICIPAL";
                 }
-                else if(commercialName.Contains("GOB U S"))
+                else if(subInitial == "* GOB U")
                 {
                     clasificado_formula = "GOBIERNO FEDERAL (U S GOVERNMENT)";
                 }
@@ -173,11 +182,48 @@ namespace read_files_PRT.Data
                 {
                     clasificado_formula = "COURTS";
                 }
-
+                commercialName = commercialName.Replace(subInitial, "").TrimStart();
+                switch(commercialName)
+                {
+                    case "S U S POSTAL SERVICE":
+                        commercialName = "U S POSTAL SERVICE";
+                        break;
+                    case "S AGRICULTURE DEPARTMENT OF":
+                        commercialName = "AGRICULTURE DEPARTMENT OF";
+                        break;
+                    case "S JOB CORPS":
+                        commercialName = "JOB CORPS";
+                        break;
+                    case "S ARMY DEPARTMENT OF THE":
+                        commercialName = "ARMY DEPARTMENT OF THE";
+                        break;
+                    case "ECREACION Y DEPORTES DEPARTAMENTO":
+                        commercialName = "RECREACION Y DEPORTES DEPARTAMENTO DE";
+                        break;
+                    case "S CUSTOMS AND BORDER PROTECTION":
+                        commercialName = "CUSTOMS AND BORDER PROTECTION";
+                        break;
+                    case "S HOMELAND SECURITY DEPARTMENT OF":
+                        commercialName = "HOMELAND SECURITY DEPARTMENT OF";
+                        break;
+                    case "S PUERTO RICO AIR NATIONAL GUARD":
+                        commercialName = "PUERTO RICO AIR NATIONAL GUARD";
+                        break;
+                    case "S U S BORDER PATROL":
+                        commercialName = "U S BORDER PATROL";
+                        break;
+                    case "S FEDERAL BUREAU OF INVESTIGATION":
+                        commercialName = "FEDERAL BUREAU OF INVESTIGATION";
+                        break;
+                    case "DEFENSORIA PERSONAS CON IMPEDIMEN":
+                        commercialName = "DEFENSORIA PERSONAS CON IMPEDIMENTOS";
+                        break;
+                }
                 ControlGeneral.streamWriter.Write($"{commercialName}|{clasificado_formula}|{undefined}|{phone}|{cod_producto}|{identifier}|{pueblo}|{PueblosRegiones.Pueblo}|{PueblosRegiones.Region}|{undefinedCode}|{undefinedCode2}|");
                 foreach (string dir in info2)
                 {
-                    ControlGeneral.streamWriter.Write($"{dir}");
+                    var last = info2.LastOrDefault();
+                    if(last == "|") ControlGeneral.streamWriter.Write($"{dir}");
                 }
                 ControlGeneral.streamWriter.WriteLine();
             }
@@ -186,5 +232,15 @@ namespace read_files_PRT.Data
             generalControl.RepeatMenu();
         }
         #endregion
+
+        bool IsAllUpper(string input)
+        {
+            for (int i = 0; i < input.Length; i++)
+            {
+                if (char.IsLetter(input[i]) && !char.IsUpper(input[i]))
+                    return false;
+            }
+            return true;
+        }
     }
 }
