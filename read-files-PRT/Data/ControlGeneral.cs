@@ -13,10 +13,13 @@ namespace read_files_PRT.Data
         de los archivos correspondientes, así como la variable del control del menú.*/
         public static StreamReader streamReader;
         public static StreamWriter streamWriter;
+        public static StreamWriter streamWriterPB_RES;
+        public static StreamWriter streamWriterPB_NEG;
         public static string rutaArchivoReadPB = Properties.Resources.rutaArchivoReadPB,
-             rutaArchivoWritePB = Properties.Resources.rutaArchivoWritePB, rutaArchivoReadGB = Properties.Resources.rutaArchivoReadGB,
-                rutaArchivoWriteGB = Properties.Resources.rutaArchivoWriteGB, rutaArchivoReadBC = Properties.Resources.rutaArchivoReadBC,
-                rutaArchivoWriteBC = Properties.Resources.rutaArchivoWriteBC, rutaArchivoPueblosRegiones = Properties.Resources.rutaArchivoPueblosRegiones;
+             rutaArchivoWritePB_RES = Properties.Resources.rutaArchivoWritePB_RES, rutaArchivoReadGB = Properties.Resources.rutaArchivoReadGB,
+             rutaArchivoWritePB_NEG = Properties.Resources.rutaArchivoWritePB_NEG, rutaArchivoWriteGB = Properties.Resources.rutaArchivoWriteGB,
+             rutaArchivoReadBC = Properties.Resources.rutaArchivoReadBC, rutaArchivoWriteBC = Properties.Resources.rutaArchivoWriteBC,
+             rutaArchivoPueblosRegiones = Properties.Resources.rutaArchivoPueblosRegiones;
         public static int menuControl = 1;
 
         #endregion
@@ -35,8 +38,24 @@ namespace read_files_PRT.Data
          ValidateFileExistence: Validar si existe el archivo deseado.*/
         public void CreateFiles(string routeWrite, string routeRead)
         {
-            streamReader = new StreamReader(routeRead);
-            streamWriter = new StreamWriter(routeWrite);
+            if(routeWrite == rutaArchivoWritePB_RES || routeWrite == rutaArchivoWritePB_NEG)
+            {
+                if (routeWrite == rutaArchivoWritePB_RES)
+                {
+                    streamReader = new StreamReader(routeRead);
+                    streamWriterPB_RES = new StreamWriter(routeWrite);
+                }
+                else
+                {
+                    streamReader = new StreamReader(routeRead);
+                    streamWriterPB_NEG = new StreamWriter(routeWrite);
+                }
+            }
+            else
+            {
+                streamReader = new StreamReader(routeRead);
+                streamWriter = new StreamWriter(routeWrite);
+            }
         }
         public void ValidateFileExistence(string routeWrite, string routeRead)
         {

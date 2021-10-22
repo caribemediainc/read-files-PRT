@@ -13,7 +13,7 @@ namespace read_files_PRT
         public static StreamReader streamReader;
         public static StreamWriter streamWriter;
         public static string rutaArchivoReadPB = Properties.Resources.rutaArchivoReadPB,
-             rutaArchivoWritePB = Properties.Resources.rutaArchivoWritePB, rutaArchivoReadGB = Properties.Resources.rutaArchivoReadGB,
+             rutaArchivoWritePB = Properties.Resources.rutaArchivoWritePB_RES, rutaArchivoReadGB = Properties.Resources.rutaArchivoReadGB,
                 rutaArchivoWriteGB = Properties.Resources.rutaArchivoWriteGB, rutaArchivoReadBC = Properties.Resources.rutaArchivoReadBC,
                 rutaArchivoWriteBC = Properties.Resources.rutaArchivoWriteBC;
         public static int menuControl = 1;

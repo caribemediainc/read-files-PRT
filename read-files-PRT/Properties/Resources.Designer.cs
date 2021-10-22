@@ -115,11 +115,20 @@ namespace read_files_PRT.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to \\netappnas\Informatica\Desarrollo\Nadia Disla\Documentos PRT\DataPRT-PB.txt.
+        ///   Looks up a localized string similar to \\netappnas\Informatica\Desarrollo\Nadia Disla\Documentos PRT\DataPRT-PB-NEG.txt.
         /// </summary>
-        internal static string rutaArchivoWritePB {
+        internal static string rutaArchivoWritePB_NEG {
             get {
-                return ResourceManager.GetString("rutaArchivoWritePB", resourceCulture);
+                return ResourceManager.GetString("rutaArchivoWritePB-NEG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to \\netappnas\Informatica\Desarrollo\Nadia Disla\Documentos PRT\DataPRT-PB-RES.txt.
+        /// </summary>
+        internal static string rutaArchivoWritePB_RES {
+            get {
+                return ResourceManager.GetString("rutaArchivoWritePB-RES", resourceCulture);
             }
         }
     }

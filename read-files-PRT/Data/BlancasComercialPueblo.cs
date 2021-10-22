@@ -11,7 +11,8 @@ namespace read_files_PRT.Data
         {
             ControlGeneral generalControl = new ControlGeneral();
             PueblosRegiones pueblosRegiones = new PueblosRegiones();
-            generalControl.ValidateFileExistence(ControlGeneral.rutaArchivoWritePB, ControlGeneral.rutaArchivoReadPB);
+            generalControl.ValidateFileExistence(ControlGeneral.rutaArchivoWritePB_RES, ControlGeneral.rutaArchivoReadPB);
+            generalControl.ValidateFileExistence(ControlGeneral.rutaArchivoWritePB_NEG, ControlGeneral.rutaArchivoReadPB);
 
             while (!ControlGeneral.streamReader.EndOfStream)
             {
@@ -79,14 +80,27 @@ namespace read_files_PRT.Data
                 pueblo = pueblo.Replace(';', 'Ñ');
                 commercialName = commercialName.Replace(';', 'ñ');
                 pueblosRegiones.PuebloRegion(pueblo);
-                ControlGeneral.streamWriter.Write($"{commercialName}|{sbUndefined}|{phone}|{sbUndefined2}|{pueblo}|{undefinedCode}|{undefinedCode2}|");
-                foreach (string dir in info2)
+                if(sbUndefined.ToString().Substring(16,2) == "2*") //NEGOCIO
                 {
-                    ControlGeneral.streamWriter.Write($"{dir}");
+                    ControlGeneral.streamWriterPB_NEG.Write($"{commercialName}|{sbUndefined}|{sbUndefined.ToString().Substring(16, 2)}|{phone}|{sbUndefined2}|{pueblo}|{undefinedCode}|{undefinedCode2}|");
+                    foreach (string dir in info2)
+                    {
+                        ControlGeneral.streamWriterPB_NEG.Write($"{dir}");
+                    }
+                    ControlGeneral.streamWriterPB_NEG.WriteLine();
                 }
-                ControlGeneral.streamWriter.WriteLine();
+                else //RESIDENCIAL
+                {
+                    ControlGeneral.streamWriterPB_RES.Write($"{commercialName}|{sbUndefined}|{sbUndefined.ToString().Substring(16, 2)}|{phone}|{sbUndefined2}|{pueblo}|{undefinedCode}|{undefinedCode2}|");
+                    foreach (string dir in info2)
+                    {
+                        ControlGeneral.streamWriterPB_RES.Write($"{dir}");
+                    }
+                    ControlGeneral.streamWriterPB_RES.WriteLine();
+                }
             }
-            ControlGeneral.streamWriter.Close();
+            ControlGeneral.streamWriterPB_RES.Close();
+            ControlGeneral.streamWriterPB_NEG.Close();
             Console.WriteLine("Se ha exportado el archivo txt correctamente.");
             generalControl.RepeatMenu();
         }

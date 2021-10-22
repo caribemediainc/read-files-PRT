@@ -135,7 +135,10 @@
   <data name="rutaArchivoWriteGB" xml:space="preserve">
     <value>\\netappnas\Informatica\Desarrollo\Nadia Disla\Documentos PRT\DataPRT-GB.txt</value>
   </data>
-  <data name="rutaArchivoWritePB" xml:space="preserve">
-    <value>\\netappnas\Informatica\Desarrollo\Nadia Disla\Documentos PRT\DataPRT-PB.txt</value>
+  <data name="rutaArchivoWritePB-NEG" xml:space="preserve">
+    <value>\\netappnas\Informatica\Desarrollo\Nadia Disla\Documentos PRT\DataPRT-PB-NEG.txt</value>
+  </data>
+  <data name="rutaArchivoWritePB-RES" xml:space="preserve">
+    <value>\\netappnas\Informatica\Desarrollo\Nadia Disla\Documentos PRT\DataPRT-PB-RES.txt</value>
   </data>
 </root>
