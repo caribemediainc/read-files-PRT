@@ -87,10 +87,12 @@ namespace read_files_PRT.Data
                         }
                     }
                 }
+
                 if (phone == "000 000-0000") phone = "";
                 pueblo = pueblo.Replace(';', 'Ñ');
-                if (pueblo.EndsWith(' ')) pueblo = pueblo.TrimEnd();
+                pueblo = pueblo.TrimEnd();
                 pueblosRegiones.PuebloRegion(pueblo);
+                
                 if(identifier == "S")
                 {
                     cod_producto = "TL";

@@ -78,11 +78,14 @@ namespace read_files_PRT.Data
                     }
                 }
                 pueblo = pueblo.Replace(';', 'Ñ');
+                pueblo = pueblo.TrimEnd();
                 commercialName = commercialName.Replace(';', 'ñ');
                 pueblosRegiones.PuebloRegion(pueblo);
+
+                //Se determina si el registro es de tipo Negocio o Residencial:
                 if(sbUndefined.ToString().Substring(16,2) == "2*") //NEGOCIO
                 {
-                    ControlGeneral.streamWriterPB_NEG.Write($"{commercialName}|{sbUndefined}|{sbUndefined.ToString().Substring(16, 2)}|{phone}|{sbUndefined2}|{pueblo}|{undefinedCode}|{undefinedCode2}|");
+                    ControlGeneral.streamWriterPB_NEG.Write($"{commercialName}|{sbUndefined}|{sbUndefined.ToString().Substring(16, 2)}|{phone}|{sbUndefined2}|{pueblo}|{PueblosRegiones.Pueblo}|{PueblosRegiones.Region}|{undefinedCode}|{undefinedCode2}|");
                     foreach (string dir in info2)
                     {
                         ControlGeneral.streamWriterPB_NEG.Write($"{dir}");
@@ -91,7 +94,7 @@ namespace read_files_PRT.Data
                 }
                 else //RESIDENCIAL
                 {
-                    ControlGeneral.streamWriterPB_RES.Write($"{commercialName}|{sbUndefined}|{sbUndefined.ToString().Substring(16, 2)}|{phone}|{sbUndefined2}|{pueblo}|{undefinedCode}|{undefinedCode2}|");
+                    ControlGeneral.streamWriterPB_RES.Write($"{commercialName}|{sbUndefined}|{sbUndefined.ToString().Substring(16, 2)}|{phone}|{sbUndefined2}|{pueblo}|{PueblosRegiones.Pueblo}|{PueblosRegiones.Region}|{undefinedCode}|{undefinedCode2}|");
                     foreach (string dir in info2)
                     {
                         ControlGeneral.streamWriterPB_RES.Write($"{dir}");
