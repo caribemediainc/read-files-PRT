@@ -21,7 +21,6 @@ namespace read_files_PRT.Data
              rutaArchivoReadBC = Properties.Resources.rutaArchivoReadBC, rutaArchivoWriteBC = Properties.Resources.rutaArchivoWriteBC,
              rutaArchivoPueblosRegiones = Properties.Resources.rutaArchivoPueblosRegiones;
         public static int menuControl = 1;
-
         #endregion
 
         #region Instancias de clases
