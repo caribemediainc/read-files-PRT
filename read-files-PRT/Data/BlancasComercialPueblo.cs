@@ -19,7 +19,7 @@ namespace read_files_PRT.Data
             {
                 Console.WriteLine("Escribiendo archivo...");
                 string line = ControlGeneral.streamReader.ReadLine(), commercialName = "", undefined = "", undefinedCode = "", undefinedCode2 = "", phoneOriginal = "", phone = "", pueblo = "", originalAddress = "", finalAddress = "", newAddress = "",
-                    undefined2 = "", splitColumnText;
+                    undefined2 = "", splitColumnText, finalAddressWrite;
                 int totalChar = 33;
 
                 commercialName = line.Substring(0, 42);
@@ -82,42 +82,66 @@ namespace read_files_PRT.Data
                 pueblo = pueblo.TrimEnd();
                 commercialName = commercialName.Replace(';', 'ñ');
                 pueblosRegiones.PuebloRegion(pueblo);
-                var dirEmptySpaces = info2.Where(x => x.EndsWith(' ')).Select(y => y).ToList();
 
                 //Se determina si el registro es de tipo Negocio o Residencial:
                 if (sbUndefined.ToString().Substring(16,2) == "2*") //NEGOCIO
                 {
                     ControlGeneral.streamWriterPB_NEG.Write($"{commercialName}|{sbUndefined}|{sbUndefined.ToString().Substring(16, 2)}|{phone}|{sbUndefined2}|{pueblo}|{PueblosRegiones.Pueblo}|{PueblosRegiones.Region}|{undefinedCode}|{undefinedCode2}|");
-                    if(info2.Count == 12)
+                    //if(info2.Count == 12)
+                    //{
+                    //    info2.RemoveAt(10);
+                    //    info2.RemoveAt(10);
+                    //}
+                    if(undefinedCode2 == "BIO")
                     {
-                        info2.RemoveAt(10);
-                        info2.RemoveAt(10);
+                        info2[10] = info2[10].Insert(0, "Bo ");
                     }
+                    if (undefinedCode == "AVE" || undefinedCode == "CAL" || undefinedCode == "BIO" || undefinedCode == "CAR" || info2.Count >= 12)
+                    {
+                        info2[8] = info2[8].TrimEnd('|');
+                        switch (undefinedCode)
+                        {
+                            case "AVE":
+                                info2[8] = $"{info2[8]} Ave {info2[9]}";
+                                ControlGeneral.streamWriterPB_NEG.Write(info2[8]);
+                                break;
+                            case "CAL":
+                                info2[8] = $"{info2[8].TrimEnd()} Calle {info2[9]}";
+                                ControlGeneral.streamWriterPB_NEG.Write(info2[8]);
+                                break;
+                            case "BIO":
+                                info2[10] = info2[10].Insert(0, "Bo ");
+                                break;
+                            case "CAR":
+                                if (undefinedCode == "CAR" && undefinedCode2 == "PAR")
+                                {
+                                    info2[9] = $"Carr {info2[9].TrimEnd('|')} {info2[10]}";
+                                    info2[10] = "|";
+                                    finalAddressWrite = $"{info2[9].TrimEnd('|')} {info2[10]}";
+                                    ControlGeneral.streamWriterPB_NEG.Write(finalAddressWrite);
+                                }
+                                else
+                                {
+                                    info2[9] = $"Carr {info2[9]}";
+                                    finalAddressWrite = $"{info2[9].TrimEnd('|')} {info2[10]}";
+                                    ControlGeneral.streamWriterPB_NEG.Write(finalAddressWrite);
+                                }
+                                break;
+                            default:
+                                info2[8] = $"{info2[8].TrimEnd('|')}{info2[9]}";
+                                ControlGeneral.streamWriterPB_NEG.Write(info2[8]);
+                                break;
+                        }
+                        if(undefinedCode2 == "URB")
+                        {
+                            info2[8] = $"{info2[8].TrimEnd('|')} Urb {info2[10]}";
+                            ControlGeneral.streamWriterPB_NEG.Write(info2[8]);
+                        }
+                    }
+                    
                     foreach (string dir in info2)
                     {
-                        if(dir.Length == 3)
-                        {
-                            bool isNumber = int.TryParse(dir.TrimEnd(), out int numericValue);
-                            if (isNumber)
-                            {
-                                ControlGeneral.streamWriterPB_NEG.Write($"{dir}");
-                            }
-                            else
-                            {
-                                ControlGeneral.streamWriterPB_NEG.Write($"{dir}");
-                            }
-                        }
-                        //if(dir != "|")
-                        //{
-                        //    if (dir.Length >= 0 && dir.Length <= 10)
-                        //    {
-                        //        if (int.Parse(dir) > 20)
-                        //        {
-
-                        //        }
-                        //    }
-                        //}
-                        ControlGeneral.streamWriterPB_NEG.Write($"{dir}");
+                        //ControlGeneral.streamWriterPB_NEG.Write($"{dir}");
                     }
                     ControlGeneral.streamWriterPB_NEG.WriteLine();
                 }
