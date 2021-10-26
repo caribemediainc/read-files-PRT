@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace read_files_PRT.Data
@@ -81,13 +82,41 @@ namespace read_files_PRT.Data
                 pueblo = pueblo.TrimEnd();
                 commercialName = commercialName.Replace(';', 'ñ');
                 pueblosRegiones.PuebloRegion(pueblo);
+                var dirEmptySpaces = info2.Where(x => x.EndsWith(' ')).Select(y => y).ToList();
 
                 //Se determina si el registro es de tipo Negocio o Residencial:
-                if(sbUndefined.ToString().Substring(16,2) == "2*") //NEGOCIO
+                if (sbUndefined.ToString().Substring(16,2) == "2*") //NEGOCIO
                 {
                     ControlGeneral.streamWriterPB_NEG.Write($"{commercialName}|{sbUndefined}|{sbUndefined.ToString().Substring(16, 2)}|{phone}|{sbUndefined2}|{pueblo}|{PueblosRegiones.Pueblo}|{PueblosRegiones.Region}|{undefinedCode}|{undefinedCode2}|");
+                    if(info2.Count == 12)
+                    {
+                        info2.RemoveAt(10);
+                        info2.RemoveAt(10);
+                    }
                     foreach (string dir in info2)
                     {
+                        if(dir.Length == 3)
+                        {
+                            bool isNumber = int.TryParse(dir.TrimEnd(), out int numericValue);
+                            if (isNumber)
+                            {
+                                ControlGeneral.streamWriterPB_NEG.Write($"{dir}");
+                            }
+                            else
+                            {
+                                ControlGeneral.streamWriterPB_NEG.Write($"{dir}");
+                            }
+                        }
+                        //if(dir != "|")
+                        //{
+                        //    if (dir.Length >= 0 && dir.Length <= 10)
+                        //    {
+                        //        if (int.Parse(dir) > 20)
+                        //        {
+
+                        //        }
+                        //    }
+                        //}
                         ControlGeneral.streamWriterPB_NEG.Write($"{dir}");
                     }
                     ControlGeneral.streamWriterPB_NEG.WriteLine();
