@@ -24,7 +24,7 @@ namespace read_files_PRT.Data
                 string line = ControlGeneral.streamReader.ReadLine(), commercialName = "", undefined = "", undefinedCode = "", undefinedCode2 = "", phoneOriginal = "", phone = "", pueblo = "", originalAddress = "", finalAddress = "", newAddress = "",
                     undefined2 = "", splitColumnText, finalAddressWrite, lastCodeRepeat = "", beforeCodeRepeat = "", lastCommercial = "";
                 int totalChar = 33;
-                
+
                 commercialName = line.Substring(0, 42);
                 undefined = line.Substring(42, 17);
                 phoneOriginal = line.Substring(59, 10);
@@ -114,10 +114,6 @@ namespace read_files_PRT.Data
                         commercialWrited.Add(info2[2]);
                     }
 
-                    //if (phone == "787 829-4002")
-                    //{
-
-                    //}
                     /*En esta sección se realiza la lógica para la escritura de la dirección de acuerdo a las condiciones presentadas.
                     BIO = Barrio (abrevitura Bo)
                     AVE = Avenida (abreviatura Ave)
@@ -140,7 +136,7 @@ namespace read_files_PRT.Data
                             {
                                 case "AVE":
                                     info2[8] = $"{info2[8]} Ave {info2[9]}";
-                                    ControlGeneral.streamWriterPB_NEG.Write(info2[8].Replace(';','ñ'));
+                                    ControlGeneral.streamWriterPB_NEG.Write(info2[8].Replace(';', 'ñ'));
                                     break;
                                 case "CAL":
                                     info2[8] = $"{info2[8].TrimEnd()} Calle {info2[9]}";
@@ -165,7 +161,7 @@ namespace read_files_PRT.Data
                                     }
                                     break;
                                 case "   ":
-                                    if(undefinedCode == "   " && undefinedCode2 == "   ")
+                                    if (undefinedCode == "   " && undefinedCode2 == "   ")
                                     {
                                         info2[8] = $"{info2[8].TrimEnd('|')}{info2[9]}";
                                         ControlGeneral.streamWriterPB_NEG.Write(info2[8].Replace(';', 'ñ'));
@@ -187,10 +183,33 @@ namespace read_files_PRT.Data
                 }
                 else //RESIDENCIAL
                 {
-                    ControlGeneral.streamWriterPB_RES.Write($"{commercialName}|{sbUndefined}|{sbUndefined.ToString().Substring(16, 2)}|{phone}|{sbUndefined2}|{pueblo}|{PueblosRegiones.Pueblo}|{PueblosRegiones.Region}|{undefinedCode}|{undefinedCode2}|");
-                    foreach (string dir in info2)
+                    commercialName = $"{info2[2].TrimEnd('|')} {info2[3].TrimEnd('|')} {info2[4].TrimEnd('|')} {info2[5].TrimEnd('|')}";
+
+                    if(info2.Count > 7)
                     {
-                        ControlGeneral.streamWriterPB_RES.Write($"{dir}");
+                        if(info2[10] != "|" || info2[10] != "")
+                        {
+                            switch(undefinedCode2)
+                            {
+                                case "URB":
+                                    info2[10] = info2[10].Insert(0, "Urb ");
+                                    break;
+                                case "BIO":
+                                    info2[10] = info2[10].Insert(0, "Bo ");
+                                    break;
+                                case "CAR":
+                                    info2[10] = info2[10].Insert(0, "Carr ");
+                                    break;
+                                case "CAL":
+                                    info2[10] = info2[10].Insert(0, "Calle ");
+                                    break;
+                            }
+                        }
+                        ControlGeneral.streamWriterPB_RES.Write($"{commercialName.Trim(' ').TrimEnd().Replace(';','ñ')}|{phone}|{PueblosRegiones.Pueblo}|{PueblosRegiones.Region}|{info2[10].Replace(';','ñ')}");
+                    }
+                    else
+                    {
+                        ControlGeneral.streamWriterPB_RES.Write($"{commercialName.Trim(' ').TrimEnd().Replace(';', 'ñ')}|{phone}|{PueblosRegiones.Pueblo}|{PueblosRegiones.Region}|{info2.Last().Replace(';', 'ñ')}");
                     }
                     ControlGeneral.streamWriterPB_RES.WriteLine();
                 }
