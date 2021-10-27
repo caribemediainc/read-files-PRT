@@ -17,14 +17,14 @@ namespace read_files_PRT.Data
 
             List<string> codeRepeatCommercial = new List<string>();
             List<string> commercialWrited = new List<string>();
-
+            int id = 0;
             while (!ControlGeneral.streamReader.EndOfStream)
             {
                 Console.WriteLine("Escribiendo archivo...");
                 string line = ControlGeneral.streamReader.ReadLine(), commercialName = "", undefined = "", undefinedCode = "", undefinedCode2 = "", phoneOriginal = "", phone = "", pueblo = "", originalAddress = "", finalAddress = "", newAddress = "",
                     undefined2 = "", splitColumnText, finalAddressWrite, lastCodeRepeat = "", beforeCodeRepeat = "", lastCommercial = "";
                 int totalChar = 33;
-
+                
                 commercialName = line.Substring(0, 42);
                 undefined = line.Substring(42, 17);
                 phoneOriginal = line.Substring(59, 10);
@@ -91,6 +91,7 @@ namespace read_files_PRT.Data
                 //Se determina si el registro es de tipo Negocio o Residencial:
                 if (sbUndefined.ToString().Substring(16, 2) == "2*") //NEGOCIO
                 {
+                    id++;
                     if (commercialWrited.Count > 0) { lastCommercial = commercialWrited.Last(); }
                     if (codeRepeatCommercial.Count > 1)
                     {
@@ -99,20 +100,25 @@ namespace read_files_PRT.Data
 
                         if (lastCodeRepeat == beforeCodeRepeat)
                         {
-                            ControlGeneral.streamWriterPB_NEG.Write($"{lastCommercial.Replace(';', 'ñ')}|{sbUndefined}|{sbUndefined.ToString().Substring(16, 2)}|{phone}|{sbUndefined2}|{pueblo}|{PueblosRegiones.Pueblo}|{PueblosRegiones.Region}|{undefinedCode}|{undefinedCode2}|");
+                            ControlGeneral.streamWriterPB_NEG.Write($"{id}|{lastCommercial.Replace(';', 'ñ')}{phone}|{PueblosRegiones.Pueblo}|{PueblosRegiones.Region}|");
                         }
                         else
                         {
-                            ControlGeneral.streamWriterPB_NEG.Write($"{info2[2].Replace(';', 'ñ')}|{sbUndefined}|{sbUndefined.ToString().Substring(16, 2)}|{phone}|{sbUndefined2}|{pueblo}|{PueblosRegiones.Pueblo}|{PueblosRegiones.Region}|{undefinedCode}|{undefinedCode2}|");
+                            ControlGeneral.streamWriterPB_NEG.Write($"{id}|{info2[2].Replace(';', 'ñ')}{phone}|{PueblosRegiones.Pueblo}|{PueblosRegiones.Region}|");
                             commercialWrited.Add(info2[2]);
                         }
                     }
                     else
                     {
-                        ControlGeneral.streamWriterPB_NEG.Write($"{info2[2].Replace(';', 'ñ')}|{sbUndefined}|{sbUndefined.ToString().Substring(16, 2)}|{phone}|{sbUndefined2}|{pueblo}|{PueblosRegiones.Pueblo}|{PueblosRegiones.Region}|{undefinedCode}|{undefinedCode2}|");
+                        ControlGeneral.streamWriterPB_NEG.Write($"{id}|{info2[2].Replace(';', 'ñ')}{phone}|{PueblosRegiones.Pueblo}|{PueblosRegiones.Region}|");
                         commercialWrited.Add(info2[2]);
                     }
 
+                    /*En esta sección se realiza la lógica para la escritura de la dirección de acuerdo a las condiciones presentadas.
+                    BIO = Barrio (abrevitura Bo)
+                    AVE = Avenida (abreviatura Ave)
+                    CAL = Calle
+                    CAR = Carretera (abreviatura Carr)*/
                     if (undefinedCode2 == "BIO")
                     {
                         info2[10] = info2[10].Insert(0, "Bo ");
@@ -122,7 +128,7 @@ namespace read_files_PRT.Data
                         info2[8] = info2[8].TrimEnd('|');
                         if (undefinedCode == "   " && info2[9] == "|")
                         {
-                            ControlGeneral.streamWriterPB_NEG.Write(info2[2]);
+                            ControlGeneral.streamWriterPB_NEG.Write(info2[2].Replace(';', 'ñ'));
                         }
                         else
                         {
@@ -130,11 +136,11 @@ namespace read_files_PRT.Data
                             {
                                 case "AVE":
                                     info2[8] = $"{info2[8]} Ave {info2[9]}";
-                                    ControlGeneral.streamWriterPB_NEG.Write(info2[8]);
+                                    ControlGeneral.streamWriterPB_NEG.Write(info2[8].Replace(';','ñ'));
                                     break;
                                 case "CAL":
                                     info2[8] = $"{info2[8].TrimEnd()} Calle {info2[9]}";
-                                    ControlGeneral.streamWriterPB_NEG.Write(info2[8]);
+                                    ControlGeneral.streamWriterPB_NEG.Write(info2[8].Replace(';', 'ñ'));
                                     break;
                                 case "BIO":
                                     info2[10] = info2[10].Insert(0, "Bo ");
@@ -145,25 +151,25 @@ namespace read_files_PRT.Data
                                         info2[9] = $"Carr {info2[9].TrimEnd('|')} {info2[10]}";
                                         info2[10] = "|";
                                         finalAddressWrite = $"{info2[9].TrimEnd('|')} {info2[10]}";
-                                        ControlGeneral.streamWriterPB_NEG.Write(finalAddressWrite);
+                                        ControlGeneral.streamWriterPB_NEG.Write(finalAddressWrite.Replace(';', 'ñ'));
                                     }
                                     else
                                     {
                                         info2[9] = $"Carr {info2[9]}";
                                         finalAddressWrite = $"{info2[9].TrimEnd('|')} {info2[10]}";
-                                        ControlGeneral.streamWriterPB_NEG.Write(finalAddressWrite);
+                                        ControlGeneral.streamWriterPB_NEG.Write(finalAddressWrite.Replace(';', 'ñ'));
                                     }
                                     break;
                                 default:
                                     info2[8] = $"{info2[8].TrimEnd('|')}{info2[9]}";
-                                    ControlGeneral.streamWriterPB_NEG.Write(info2[8]);
+                                    ControlGeneral.streamWriterPB_NEG.Write(info2[8].Replace(';', 'ñ'));
                                     break;
                             }
                         }
                         if (undefinedCode2 == "URB")
                         {
                             info2[8] = $"{info2[8].TrimEnd('|')} Urb {info2[10]}";
-                            ControlGeneral.streamWriterPB_NEG.Write(info2[8]);
+                            ControlGeneral.streamWriterPB_NEG.Write(info2[8].Replace(';', 'ñ'));
                         }
                     }
                     ControlGeneral.streamWriterPB_NEG.WriteLine();
