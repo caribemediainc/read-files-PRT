@@ -114,6 +114,10 @@ namespace read_files_PRT.Data
                         commercialWrited.Add(info2[2]);
                     }
 
+                    //if (phone == "787 829-4002")
+                    //{
+
+                    //}
                     /*En esta sección se realiza la lógica para la escritura de la dirección de acuerdo a las condiciones presentadas.
                     BIO = Barrio (abrevitura Bo)
                     AVE = Avenida (abreviatura Ave)
@@ -160,9 +164,16 @@ namespace read_files_PRT.Data
                                         ControlGeneral.streamWriterPB_NEG.Write(finalAddressWrite.Replace(';', 'ñ'));
                                     }
                                     break;
-                                default:
-                                    info2[8] = $"{info2[8].TrimEnd('|')}{info2[9]}";
-                                    ControlGeneral.streamWriterPB_NEG.Write(info2[8].Replace(';', 'ñ'));
+                                case "   ":
+                                    if(undefinedCode == "   " && undefinedCode2 == "   ")
+                                    {
+                                        info2[8] = $"{info2[8].TrimEnd('|')}{info2[9]}";
+                                        ControlGeneral.streamWriterPB_NEG.Write(info2[8].Replace(';', 'ñ'));
+                                    }
+                                    else
+                                    {
+                                        info2[8] = $"{info2[8].TrimEnd('|')}{info2[9]}";
+                                    }
                                     break;
                             }
                         }
