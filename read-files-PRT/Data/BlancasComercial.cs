@@ -117,6 +117,7 @@ namespace read_files_PRT.Data
                 string repeatCommercial = undefined.ToString().Substring(4, 4);
                 codeRepeatCommercial.Add(repeatCommercial);
                 id++;
+
                 if (commercialWrited.Count > 0) { lastCommercial = commercialWrited.Last(); }
                 if (codeRepeatCommercial.Count > 1)
                 {
@@ -139,6 +140,11 @@ namespace read_files_PRT.Data
                     commercialWrited.Add(info2[2]);
                 }
 
+                /*En esta sección se realiza la lógica para la escritura de la dirección de acuerdo a las condiciones presentadas.
+                    BIO = Barrio (abrevitura Bo)
+                    AVE = Avenida (abreviatura Ave)
+                    CAL = Calle
+                    CAR = Carretera (abreviatura Carr)*/
                 if (undefinedCode2 == "BIO")
                 {
                     info2[10] = info2[10].Insert(0, "Bo ");
@@ -199,7 +205,6 @@ namespace read_files_PRT.Data
                         ControlGeneral.streamWriter.Write(info2[8].Replace(';', 'ñ'));
                     }
                 }
-
                 ControlGeneral.streamWriter.WriteLine();
             }
             ControlGeneral.streamWriter.Close();
