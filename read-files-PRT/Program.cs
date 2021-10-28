@@ -10,8 +10,6 @@ namespace read_files_PRT
 {
     class Program
     {
-        public static StreamReader streamReader;
-        public static StreamWriter streamWriter;
         public static string rutaArchivoReadPB = Properties.Resources.rutaArchivoReadPB,
              rutaArchivoWritePB = Properties.Resources.rutaArchivoWritePB_RES, rutaArchivoReadGB = Properties.Resources.rutaArchivoReadGB,
                 rutaArchivoWriteGB = Properties.Resources.rutaArchivoWriteGB, rutaArchivoReadBC = Properties.Resources.rutaArchivoReadBC,
