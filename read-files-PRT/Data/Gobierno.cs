@@ -15,6 +15,7 @@ namespace read_files_PRT.Data
             generalControl.ValidateFileExistence(ControlGeneral.rutaArchivoWriteGB, ControlGeneral.rutaArchivoReadGB);
             PueblosRegiones pueblosRegiones = new PueblosRegiones();
             List<string> commercialNames = new List<string>();
+            int id = 0;
 
             while (!ControlGeneral.streamReader.EndOfStream)
             {
@@ -92,8 +93,8 @@ namespace read_files_PRT.Data
                 pueblo = pueblo.Replace(';', 'Ñ');
                 pueblo = pueblo.TrimEnd();
                 pueblosRegiones.PuebloRegion(pueblo);
-                
-                if(identifier == "S")
+                id++;
+                if (identifier == "S")
                 {
                     cod_producto = "TL";
                 }
@@ -221,7 +222,8 @@ namespace read_files_PRT.Data
                         commercialName = "DEFENSORIA PERSONAS CON IMPEDIMENTOS";
                         break;
                 }
-                ControlGeneral.streamWriter.Write($"{commercialName}|{clasificado_formula}|{undefined}|{phone}|{cod_producto}|{identifier}|{pueblo}|{PueblosRegiones.Pueblo}|{PueblosRegiones.Region}|{undefinedCode}|{undefinedCode2}|");
+                
+                ControlGeneral.streamWriter.Write($"{id}|{commercialName}|{clasificado_formula}|{undefined}|{phone}|{cod_producto}|{identifier}|{pueblo}|{PueblosRegiones.Pueblo}|{PueblosRegiones.Region}|{undefinedCode}|{undefinedCode2}|");
                 foreach (string dir in info2)
                 {
                     var last = info2.LastOrDefault();

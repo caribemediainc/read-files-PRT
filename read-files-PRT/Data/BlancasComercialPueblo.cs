@@ -183,6 +183,7 @@ namespace read_files_PRT.Data
                 }
                 else //RESIDENCIAL
                 {
+                    id++;
                     commercialName = $"{info2[2].TrimEnd('|')} {info2[3].TrimEnd('|')} {info2[4].TrimEnd('|')} {info2[5].TrimEnd('|')}";
 
                     if(info2.Count > 7)
@@ -205,11 +206,11 @@ namespace read_files_PRT.Data
                                     break;
                             }
                         }
-                        ControlGeneral.streamWriterPB_RES.Write($"{commercialName.Trim(' ').TrimEnd().Replace(';','ñ')}|{phone}|{PueblosRegiones.Pueblo}|{PueblosRegiones.Region}|{info2[10].Replace(';','ñ')}");
+                        ControlGeneral.streamWriterPB_RES.Write($"{id}|{commercialName.Trim(' ').TrimEnd().Replace(';','ñ')}|{phone}|{PueblosRegiones.Pueblo}|{PueblosRegiones.Region}|{info2[10].Replace(';','ñ')}");
                     }
                     else
                     {
-                        ControlGeneral.streamWriterPB_RES.Write($"{commercialName.Trim(' ').TrimEnd().Replace(';', 'ñ')}|{phone}|{PueblosRegiones.Pueblo}|{PueblosRegiones.Region}|{info2.Last().Replace(';', 'ñ')}");
+                        ControlGeneral.streamWriterPB_RES.Write($"{id}|{commercialName.Trim(' ').TrimEnd().Replace(';', 'ñ')}|{phone}|{PueblosRegiones.Pueblo}|{PueblosRegiones.Region}|{info2.Last().Replace(';', 'ñ')}");
                     }
                     ControlGeneral.streamWriterPB_RES.WriteLine();
                 }
