@@ -17,7 +17,7 @@ namespace read_files_PRT.Data
 
             List<string> codeRepeatCommercial = new List<string>();
             List<string> commercialWrited = new List<string>();
-            int id = 0;
+            int idNegocio = 0, idResidencial = 0;
             while (!ControlGeneral.streamReader.EndOfStream)
             {
                 Console.WriteLine("Escribiendo archivo...");
@@ -91,7 +91,7 @@ namespace read_files_PRT.Data
                 //Se determina si el registro es de tipo Negocio o Residencial:
                 if (sbUndefined.ToString().Substring(16, 2) == "2*") //NEGOCIO
                 {
-                    id++;
+                    idNegocio++;
                     if (commercialWrited.Count > 0) { lastCommercial = commercialWrited.Last(); }
                     if (codeRepeatCommercial.Count > 1)
                     {
@@ -100,17 +100,17 @@ namespace read_files_PRT.Data
 
                         if (lastCodeRepeat == beforeCodeRepeat)
                         {
-                            ControlGeneral.streamWriterPB_NEG.Write($"{id}|{lastCommercial.Replace(';', 'ñ')}{phone}|{PueblosRegiones.Pueblo}|{PueblosRegiones.Region}|");
+                            ControlGeneral.streamWriterPB_NEG.Write($"{idNegocio}|{lastCommercial.Replace(';', 'ñ')}{phone}|{PueblosRegiones.Pueblo}|{PueblosRegiones.Region}|");
                         }
                         else
                         {
-                            ControlGeneral.streamWriterPB_NEG.Write($"{id}|{info2[2].Replace(';', 'ñ')}{phone}|{PueblosRegiones.Pueblo}|{PueblosRegiones.Region}|");
+                            ControlGeneral.streamWriterPB_NEG.Write($"{idNegocio}|{info2[2].Replace(';', 'ñ')}{phone}|{PueblosRegiones.Pueblo}|{PueblosRegiones.Region}|");
                             commercialWrited.Add(info2[2]);
                         }
                     }
                     else
                     {
-                        ControlGeneral.streamWriterPB_NEG.Write($"{id}|{info2[2].Replace(';', 'ñ')}{phone}|{PueblosRegiones.Pueblo}|{PueblosRegiones.Region}|");
+                        ControlGeneral.streamWriterPB_NEG.Write($"{idNegocio}|{info2[2].Replace(';', 'ñ')}{phone}|{PueblosRegiones.Pueblo}|{PueblosRegiones.Region}|");
                         commercialWrited.Add(info2[2]);
                     }
 
@@ -183,7 +183,7 @@ namespace read_files_PRT.Data
                 }
                 else //RESIDENCIAL
                 {
-                    id++;
+                    idResidencial++;
                     commercialName = $"{info2[2].TrimEnd('|')} {info2[3].TrimEnd('|')} {info2[4].TrimEnd('|')} {info2[5].TrimEnd('|')}";
 
                     if(info2.Count > 7)
@@ -206,11 +206,11 @@ namespace read_files_PRT.Data
                                     break;
                             }
                         }
-                        ControlGeneral.streamWriterPB_RES.Write($"{id}|{commercialName.Trim(' ').TrimEnd().Replace(';','ñ')}|{phone}|{PueblosRegiones.Pueblo}|{PueblosRegiones.Region}|{info2[10].Replace(';','ñ')}");
+                        ControlGeneral.streamWriterPB_RES.Write($"{idResidencial}|{commercialName.Trim(' ').TrimEnd().Replace(';','ñ')}|{phone}|{PueblosRegiones.Pueblo}|{PueblosRegiones.Region}|{info2[10].Replace(';','ñ')}");
                     }
                     else
                     {
-                        ControlGeneral.streamWriterPB_RES.Write($"{id}|{commercialName.Trim(' ').TrimEnd().Replace(';', 'ñ')}|{phone}|{PueblosRegiones.Pueblo}|{PueblosRegiones.Region}|{info2.Last().Replace(';', 'ñ')}");
+                        ControlGeneral.streamWriterPB_RES.Write($"{idResidencial}|{commercialName.Trim(' ').TrimEnd().Replace(';', 'ñ')}|{phone}|{PueblosRegiones.Pueblo}|{PueblosRegiones.Region}|{info2.Last().Replace(';', 'ñ')}");
                     }
                     ControlGeneral.streamWriterPB_RES.WriteLine();
                 }
